@@ -26,10 +26,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Cypress tests (UI & API)
+      - name: Create results directory
+        run: mkdir -p results
+
+      - name: Run Cypress tests with JUnit reporter
         run: npm run test:ci
 
-      - name: Upload test results (JUnit)
+      - name: Upload JUnit test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -40,12 +43,21 @@ jobs:
       - name: Run Cypress tests with Mochawesome reporter
         run: npm run test:mochawesome
 
+      - name: Check for Mochawesome reports
+        id: check-reports
+        run: |
+          if [ -d "results" ] && ls results/*.json 1> /dev/null 2>&1; then
+            echo "reports_exist=true" >> $GITHUB_OUTPUT
+          else
+            echo "reports_exist=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Merge Mochawesome reports
-        if: always()
+        if: steps.check-reports.outputs.reports_exist == 'true'
         run: npm run report:merge
 
       - name: Generate Mochawesome HTML report
-        if: always()
+        if: steps.check-reports.outputs.reports_exist == 'true'
         run: npm run report:generate
 
       - name: Upload Mochawesome HTML report

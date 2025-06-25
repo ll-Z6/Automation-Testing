@@ -10,8 +10,8 @@
     "test:petstore": "cypress run --spec \"cypress/e2e/petstore/**\"",
     "test:ci": "cypress run --browser chrome --reporter junit --reporter-options 'mochaFile=results/test-results.[hash].xml,toConsole=true'",
     "test:mochawesome": "cypress run --browser chrome --reporter mochawesome --reporter-options reportDir=results,overwrite=false,html=false,json=true",
-    "report:merge": "mochawesome-merge results/*.json > results/merged-report.json",
-    "report:generate": "marge results/merged-report.json -f report -o results"
+    "report:merge": "npx mochawesome-merge results/*.json > results/merged-report.json",
+    "report:generate": "npx marge results/merged-report.json -f report -o results"
   },
   "keywords": [
     "cypress",
