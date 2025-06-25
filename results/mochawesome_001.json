@@ -1,0 +1,124 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-25T12:13:10.515Z",
+    "end": "2025-06-25T12:13:14.829Z",
+    "duration": 4314,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "fa03b970-b9b2-4e64-94e4-d12b0bf940c3",
+      "title": "",
+      "fullFile": "cypress/e2e/saucedemo/checkout.cy.ts",
+      "file": "cypress/e2e/saucedemo/checkout.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "1c486c3e-c337-4f88-b9d3-479f7d7c5ba5",
+          "title": "SauceDemo Checkout Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should complete checkout process",
+              "fullTitle": "SauceDemo Checkout Tests should complete checkout process",
+              "timedOut": null,
+              "duration": 2942,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-test=\"checkout\"]').click();\ncy.fillCheckoutInfo('John', 'Doe', '12345');\ncy.get('[data-test=\"continue\"]').click();\ncy.get('[data-test=\"finish\"]').click();\ncy.get('.complete-header').should('contain', 'Thank you for your order!');",
+              "err": {},
+              "uuid": "da6dd8c6-102e-4009-826f-a4114f0c1240",
+              "parentUUID": "1c486c3e-c337-4f88-b9d3-479f7d7c5ba5",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should validate required fields",
+              "fullTitle": "SauceDemo Checkout Tests should validate required fields",
+              "timedOut": null,
+              "duration": 1322,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-test=\"checkout\"]').click();\ncy.get('[data-test=\"continue\"]').click();\ncy.get('[data-test=\"error\"]').should('contain', 'First Name is required');",
+              "err": {},
+              "uuid": "7d85550e-cd22-412d-b4a6-d30a93c14e1c",
+              "parentUUID": "1c486c3e-c337-4f88-b9d3-479f7d7c5ba5",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "da6dd8c6-102e-4009-826f-a4114f0c1240",
+            "7d85550e-cd22-412d-b4a6-d30a93c14e1c"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4264,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "results",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-25T12:13:15.565Z",
+    "end": "2025-06-25T12:13:18.626Z",
+    "duration": 3061,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "b726f6c1-28da-4271-b046-d4f74892e172",
+      "title": "",
+      "fullFile": "cypress/e2e/saucedemo/login.cy.ts",
+      "file": "cypress/e2e/saucedemo/login.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "57813e0a-d5ca-40d1-89a1-be4b0e65f35d",
+          "title": "SauceDemo Login Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display login page elements",
+              "fullTitle": "SauceDemo Login Tests should display login page elements",
+              "timedOut": null,
+              "duration": 443,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-test=\"username\"]').should('be.visible');\ncy.get('[data-test=\"password\"]').should('be.visible');\ncy.get('[data-test=\"login-button\"]').should('be.visible');",
+              "err": {},
+              "uuid": "348c9abf-aa38-4d07-9b88-7cb0be281c2e",
+              "parentUUID": "57813e0a-d5ca-40d1-89a1-be4b0e65f35d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should login with valid credentials (Happy Path)",
+              "fullTitle": "SauceDemo Login Tests should login with valid credentials (Happy Path)",
+              "timedOut": null,
+              "duration": 776,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.login('standard_user', 'secret_sauce');\ncy.url().should('include', '/inventory.html');\ncy.get('.inventory_list').should('be.visible');",
+              "err": {},
+              "uuid": "1c7cb323-b47a-4de7-bd1a-d3f0a239e5ea",
+              "parentUUID": "57813e0a-d5ca-40d1-89a1-be4b0e65f35d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display error with invalid credentials (Sad Path)",
+              "fullTitle": "SauceDemo Login Tests should display error with invalid credentials (Sad Path)",
+              "timedOut": null,
+              "duration": 981,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.login('invalid_user', 'wrong_password');\ncy.get('[data-test=\"error\"]').should('be.visible').and('contain', 'Username and password do not match');",
+              "err": {},
+              "uuid": "7f55405d-8e84-4abc-aa0e-4684a8f5a78a",
+              "parentUUID": "57813e0a-d5ca-40d1-89a1-be4b0e65f35d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should lock out locked user",
+              "fullTitle": "SauceDemo Login Tests should lock out locked user",
+              "timedOut": null,
+              "duration": 787,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.login('locked_out_user', 'secret_sauce');\ncy.get('[data-test=\"error\"]').should('contain', 'Epic sadface: Sorry, this user has been locked out.');",
+              "err": {},
+              "uuid": "aaa31127-f5c8-4d7e-a97b-612a68060d29",
+              "parentUUID": "57813e0a-d5ca-40d1-89a1-be4b0e65f35d",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "348c9abf-aa38-4d07-9b88-7cb0be281c2e",
+            "1c7cb323-b47a-4de7-bd1a-d3f0a239e5ea",
+            "7f55405d-8e84-4abc-aa0e-4684a8f5a78a",
+            "aaa31127-f5c8-4d7e-a97b-612a68060d29"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2987,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "results",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
