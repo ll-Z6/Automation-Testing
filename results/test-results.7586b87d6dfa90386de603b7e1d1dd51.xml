@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="4.051" tests="4" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-06-25T11:41:46" tests="0" file="cypress/e2e/saucedemo/login.cy.ts" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="SauceDemo Login Tests" timestamp="2025-06-25T11:41:46" tests="4" time="4.050" failures="0">
+    <testcase name="SauceDemo Login Tests should display login page elements" time="0.547" classname="should display login page elements">
+    </testcase>
+    <testcase name="SauceDemo Login Tests should login with valid credentials (Happy Path)" time="0.778" classname="should login with valid credentials (Happy Path)">
+    </testcase>
+    <testcase name="SauceDemo Login Tests should display error with invalid credentials (Sad Path)" time="0.995" classname="should display error with invalid credentials (Sad Path)">
+    </testcase>
+    <testcase name="SauceDemo Login Tests should lock out locked user" time="0.782" classname="should lock out locked user">
+    </testcase>
+  </testsuite>
+</testsuites>

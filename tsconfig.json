@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "types": ["cypress", "node"],  // 关键：包含 Cypress 类型
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["cypress/*"]
+    },
+    "typeRoots": ["./node_modules/@types", "./cypress/support"]
+  },
+  "include": ["**/*.ts", "**/*.tsx", "cypress/support/*.d.ts"],
+  "exclude": ["node_modules"]
+}

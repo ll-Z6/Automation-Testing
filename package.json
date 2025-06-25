@@ -1,0 +1,32 @@
+{
+  "name": "cypress-automation-project",
+  "version": "1.0.0",
+  "description": "Cypress automation project with TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run",
+    "test:ui": "cypress open",
+    "test:saucedemo": "cypress run --spec \"cypress/e2e/saucedemo/**\"",
+    "test:petstore": "cypress run --spec \"cypress/e2e/petstore/**\"",
+    "test:ci": "cypress run --browser chrome --reporter junit --reporter-options 'mochaFile=results/test-results.[hash].xml,toConsole=true'",
+    "test:mochawesome": "cypress run --browser chrome --reporter mochawesome --reporter-options reportDir=results,overwrite=false,html=false,json=true",
+    "report:merge": "mochawesome-merge results/*.json > results/merged-report.json",
+    "report:generate": "marge results/merged-report.json -f report -o results"
+  },
+  "keywords": [
+    "cypress",
+    "automation",
+    "testing",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.0.4",
+    "cypress": "^14.5.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.2.2",
+    "mochawesome-report-generator": "^6.2.0",
+    "typescript": "^5.8.3"
+  }
+}
