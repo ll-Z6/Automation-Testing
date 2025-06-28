@@ -1,0 +1,21 @@
+{
+  "customers": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "zipCode": "12345",
+      "description": "Valid customer"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Smith", 
+      "zipCode": "54321",
+      "description": "Another valid customer"
+    }
+  ],
+  "validationMessages": {
+    "firstNameRequired": "First Name is required",
+    "lastNameRequired": "Last Name is required",
+    "zipCodeRequired": "Postal Code is required"
+  }
+} 

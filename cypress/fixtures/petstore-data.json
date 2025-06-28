@@ -1,0 +1,13 @@
+{
+  "baseUrl": "https://petstore.swagger.io/v2",
+  "endpoints": {
+    "inventory": "/store/inventory",
+    "order": "/store/order",
+    "orderById": "/store/order/{id}"
+  },
+  "statusCodes": {
+    "serviceUnavailable": 503,
+    "success": 200,
+    "notFound": 404
+  }
+}
