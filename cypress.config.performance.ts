@@ -28,6 +28,12 @@ export default defineConfig({
       runMode: 1,
       openMode: 0
     },
+    // JUnit reporter configuration
+    reporter: 'mocha-junit-reporter',
+    reporterOptions: {
+      mochaFile: 'results/junit/performance-test-results-[hash].xml',
+      toConsole: true
+    },
     env: {
       testType: 'performance'
     }

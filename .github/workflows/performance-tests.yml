@@ -35,7 +35,7 @@ jobs:
         run: npm run test:performance
         
       - name: Run performance tests with JUnit reporter
-        run: npm run test:ci:performance
+        run: npx cypress run --config-file cypress.config.performance.ts --browser chrome
         
       - name: Create results directories
         run: |
