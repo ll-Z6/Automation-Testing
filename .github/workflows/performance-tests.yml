@@ -31,16 +31,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Run performance tests
-        run: npm run test:performance
-        
-      - name: Run performance tests with JUnit reporter
-        run: npx cypress run --config-file cypress.config.performance.ts --browser chrome
-        
       - name: Create results directories
         run: |
           mkdir -p results/performance
           mkdir -p results/junit
+        
+      - name: Run performance tests with both reporters
+        run: npx cypress run --config-file cypress.config.performance.ts --browser chrome --reporter mochawesome --reporter-options reportDir=results/performance,overwrite=false,html=false,json=true --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/performance-test-results-[hash].xml,testsuitesTitle='Cypress Performance Tests',toConsole=true
         
       - name: Generate performance test report
         run: npm run report:performance
