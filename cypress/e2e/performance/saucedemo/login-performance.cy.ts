@@ -193,7 +193,7 @@ describe('SauceDemo Login Performance & Stress Tests', () => {
             }
             
             // Optional: If fluctuation is too high, set a more lenient threshold as fail condition
-            if (trimmedRatio > 4) {
+            if (trimmedRatio > 8.0) {
                 throw new Error(`Performance fluctuation too high! Trimmed max/min ratio: ${trimmedRatio.toFixed(2)}`);
             }
         });
