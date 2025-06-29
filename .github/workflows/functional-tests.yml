@@ -9,6 +9,12 @@ jobs:
   functional-tests:
     runs-on: ubuntu-latest
     name: Run Functional Tests
+    env:
+      TERM: xterm-256color
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: read
     
     steps:
       - name: Checkout code

@@ -1,4 +1,4 @@
-name: 性能测试流水线
+name: Performance Tests
 on: 
   schedule:
     - cron: '0 2 1 1 *'  # 每年1月1日凌晨2点运行
@@ -9,7 +9,14 @@ on:
 jobs:
   performance-tests:
     runs-on: ubuntu-latest
-    name: 运行性能测试
+    name: Performance Tests
+    env:
+      TERM: xterm-256color
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: read
+      issues: write
     
     steps:
       - name: Checkout code
