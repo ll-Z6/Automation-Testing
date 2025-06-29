@@ -18,10 +18,17 @@ cypress-automation-project/
 │   ├── e2e/
 │   │   ├── functional/         # Functional test cases
 │   │   │   ├── saucedemo/
+│   │   │   │   ├── login.cy.ts
+│   │   │   │   ├── products.cy.ts
+│   │   │   │   └── checkout.cy.ts
 │   │   │   └── petstore/
+│   │   │       └── store.cy.ts
 │   │   └── performance/        # Performance & stress test cases
 │   │       ├── saucedemo/
+│   │       │   ├── login-performance.cy.ts
+│   │       │   └── checkout-performance.cy.ts
 │   │       └── petstore/
+│   │           └── api-performance.cy.ts
 │   ├── fixtures/               # Test data
 │   ├── support/                # Custom commands & page objects
 │   ├── screenshots/
@@ -34,14 +41,28 @@ cypress-automation-project/
 ├── package.json
 ├── tsconfig.json
 └── .github/workflows/          # CI/CD workflows
+    ├── functional-tests.yml
+    └── performance-tests.yml
 ```
 
 ## Core Features
-- **Functional Testing**: E2E flows for login, checkout, product sorting, API validation, etc.
-- **Performance & Stress Testing**: Page load, API response, rapid user actions, concurrency, and memory pressure.
-- **Data-driven**: Fixtures for stable data, dynamic fetching for volatile data.
-- **Separation of Concerns**: Different configs, reports, and CI for functional vs. performance.
-- **CI/CD Integration**: Automated pipelines for both test types, with reporting and GitHub issue creation on failure.
+
+### Functional Testing
+- **SauceDemo**: Login validation, product sorting/filtering, checkout flow
+- **PetStore**: API testing, store operations, data validation
+- **Data-driven**: Dynamic test data with fixtures and API responses
+- **Best Practices**: Page Object Model, custom commands, assertions
+
+### Performance & Stress Testing
+- **Page Load Performance**: Response time measurements and thresholds
+- **API Performance**: Endpoint response times and throughput
+- **Stress Testing**: Rapid user actions, concurrency, memory pressure
+- **Threshold Monitoring**: Configurable performance baselines
+
+### Test Organization
+- **Separation of Concerns**: Different configs, reports, and CI for functional vs. performance
+- **Modular Structure**: Organized by application and test type
+- **Reusable Components**: Shared fixtures, commands, and page objects
 
 ## Setup Instructions
 
@@ -68,33 +89,77 @@ npm run test:performance
 ```
 - Results: `results/performance/`, videos/screenshots in `cypress/videos/performance/` and `cypress/screenshots/performance/`
 
+#### All Tests
+```bash
+npm run test:all
+```
+
 #### Open Cypress Interactive Runner
 ```bash
-npx cypress open
+npm run test:ui
+```
+
+#### Generate Reports
+```bash
+# Generate functional test reports
+npm run report:functional
+
+# Generate performance test reports
+npm run report:performance
 ```
 
 ## CI Pipeline Usage
 
-### GitHub Actions
-- **Functional Tests**: Triggered on push or pull request to `main` or `develop` branches.
-- **Performance Tests**: Triggered on push to `main`, or manually, or automatically once a year (January 1st, 2:00 AM UTC).
+### GitHub Actions Workflows
+
+#### Functional Tests (`functional-tests.yml`)
+- **Trigger**: Push or pull request to `main` or `develop` branches
+- **Purpose**: Validate application functionality and user flows
+- **Reports**: Mochawesome HTML reports and JUnit XML for CI integration
+
+#### Performance Tests (`performance-tests.yml`)
+- **Trigger**: Push to `main`, manual trigger, or yearly schedule (January 1st, 2:00 AM UTC)
+- **Purpose**: Monitor performance metrics and stress test scenarios
+- **Reports**: Performance-specific reports with threshold analysis
 
 ### How to Run CI Manually
-- Go to the **Actions** tab in your GitHub repository.
-- Select the workflow (`Functional Tests` or `Performance Tests`).
-- Click **Run workflow** to trigger manually.
+1. Go to the **Actions** tab in your GitHub repository
+2. Select the workflow (`Functional Tests` or `Performance Tests`)
+3. Click **Run workflow** to trigger manually
 
 ### Viewing Test Results
-- After each CI run, reports are uploaded as artifacts.
-- Navigate to the workflow run in GitHub Actions.
-- Download the `functional-test-results` or `performance-test-results` artifact for full HTML/JSON reports, videos, and screenshots.
-- For PRs, a summary and report link are auto-commented on the PR.
+- **CI Artifacts**: Download `functional-test-results` or `performance-test-results` from workflow runs
+- **Local Reports**: Check `results/functional/` and `results/performance/` directories
+- **PR Integration**: Automatic summary and report links posted on pull requests
+- **Failure Handling**: GitHub issues automatically created for failed performance tests
+
+## Test Coverage
+
+### SauceDemo Application
+- **Functional**: Login validation, product management, checkout process
+- **Performance**: Login flow performance, checkout stress testing
+
+### PetStore Application
+- **Functional**: API testing, store operations, data validation
+- **Performance**: API endpoint performance, concurrent request handling
 
 ## Troubleshooting
-- If tests fail due to network or environment instability, review the logs and screenshots in the results folders.
-- For performance test failures, check the thresholds in `cypress/e2e/performance/*` and adjust if needed.
-- For CI/CD issues, review the workflow YAML files in `.github/workflows/`.
+
+### Common Issues
+- **Network Timeouts**: Check internet connection and target application availability
+- **Performance Failures**: Review thresholds in performance test files and adjust if needed
+- **CI/CD Issues**: Verify workflow YAML configurations and environment variables
+
+### Performance Test Adjustments
+- Modify thresholds in `cypress/e2e/performance/*` files
+- Adjust stress test parameters for different environments
+- Update baseline metrics as application performance improves
+
+### Report Generation
+- Ensure `results/` directory exists before running report commands
+- Check for sufficient disk space for video/screenshot storage
+- Verify Mochawesome dependencies are properly installed
 
 ---
 
-**Happy Testing!** 
+**Happy Testing! 🚀** 
