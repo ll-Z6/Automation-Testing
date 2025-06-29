@@ -3,7 +3,20 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      // Configure multi-reporters for functional tests
+      require('cypress-multi-reporters')(on, config, {
+        reporterEnabled: 'mochawesome, mocha-junit-reporter',
+        mochawesomeReporterOptions: {
+          reportDir: 'results/functional',
+          overwrite: false,
+          html: false,
+          json: true
+        },
+        mochaJunitReporterReporterOptions: {
+          mochaFile: 'results/junit/test-results-[hash].xml',
+          toConsole: true
+        }
+      });
       return config
     },
     // Functional test specific configuration
