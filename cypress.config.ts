@@ -23,6 +23,7 @@ export default defineConfig({
     experimentalModifyObstructiveThirdPartyCode: true,
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      return config;
     }
   },
   requestTimeout: 10000,

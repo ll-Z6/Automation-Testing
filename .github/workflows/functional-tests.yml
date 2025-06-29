@@ -26,6 +26,9 @@ jobs:
       - name: Run functional tests
         run: npm run test:functional
         
+      - name: Run Cypress tests with JUnit reporter
+        run: npm run test:ci
+        
       - name: Generate functional test report
         run: npm run report:functional
         
@@ -39,6 +42,20 @@ jobs:
             cypress/videos/functional/
             cypress/screenshots/functional/
           retention-days: 30
+          
+      - name: Upload JUnit Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-test-results
+          path: results/junit/
+          
+      - name: Publish Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Cypress JUnit Report
+          path: results/junit/*.xml
+          reporter: java-junit
           
       - name: Comment PR with results
         if: github.event_name == 'pull_request'

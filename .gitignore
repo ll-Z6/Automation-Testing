@@ -5,3 +5,21 @@ cypress/downloads/
 results/
 *.log
 .DS_Store
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# Build outputs
+dist/
+build/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
