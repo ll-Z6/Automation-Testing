@@ -34,8 +34,11 @@ jobs:
           mkdir -p results/functional
           mkdir -p results/junit
         
-      - name: Run functional tests
-        run: npx cypress run --config-file cypress.config.functional.ts --browser chrome
+      - name: Run functional tests with Mochawesome reporter
+        run: npx cypress run --config-file cypress.config.functional.ts --browser chrome --reporter mochawesome --reporter-options reportDir=results/functional,overwrite=false,html=false,json=true
+        
+      - name: Run functional tests with JUnit reporter
+        run: npx cypress run --config-file cypress.config.functional.ts --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/test-results-[hash].xml,testsuitesTitle='Cypress Functional Tests',toConsole=true
         
       - name: Generate functional test report
         run: npm run report:functional

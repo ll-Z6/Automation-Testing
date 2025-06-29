@@ -36,8 +36,11 @@ jobs:
           mkdir -p results/performance
           mkdir -p results/junit
         
-      - name: Run performance tests
-        run: npx cypress run --config-file cypress.config.performance.ts --browser chrome
+      - name: Run performance tests with Mochawesome reporter
+        run: npx cypress run --config-file cypress.config.performance.ts --browser chrome --reporter mochawesome --reporter-options reportDir=results/performance,overwrite=false,html=false,json=true
+        
+      - name: Run performance tests with JUnit reporter
+        run: npx cypress run --config-file cypress.config.performance.ts --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/performance-test-results-[hash].xml,testsuitesTitle='Cypress Performance Tests',toConsole=true
         
       - name: Generate performance test report
         run: npm run report:performance
