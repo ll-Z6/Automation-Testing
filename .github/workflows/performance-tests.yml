@@ -1,0 +1,98 @@
+name: Performance Tests
+on: 
+  schedule:
+    - cron: '0 2 1 1 *'  # 每年1月1日凌晨2点运行
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  performance-tests:
+    runs-on: ubuntu-latest
+    name: Run Performance Tests
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run performance tests
+        run: npm run test:performance
+        
+      - name: Generate performance test report
+        run: npm run report:performance
+        
+      - name: Upload performance test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-test-results
+          path: |
+            results/performance/
+            cypress/videos/performance/
+            cypress/screenshots/performance/
+          retention-days: 30
+          
+      - name: Create performance issue if tests fail
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            try {
+              // Check if there are performance test failures
+              const reportPath = 'results/performance/performance-report.html';
+              if (fs.existsSync(reportPath)) {
+                const reportContent = fs.readFileSync(reportPath, 'utf8');
+                const failedTests = reportContent.match(/Failed: (\d+)/)?.[1] || '0';
+                
+                if (parseInt(failedTests) > 0) {
+                  github.rest.issues.create({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    title: '🚨 Performance Test Failures Detected',
+                    body: `## Performance Test Alert ⚠️\n\n**Failed Tests:** ${failedTests}\n\n**Triggered by:** ${context.eventName}\n\n**Run ID:** ${context.runId}\n\n[View Full Report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n\nPlease investigate the performance issues and update thresholds if necessary.`,
+                    labels: ['performance', 'bug', 'automation'],
+                    assignees: ['@ll-Z6']
+                  });
+                }
+              }
+            } catch (error) {
+              console.log('Could not create issue:', error.message);
+            }
+          
+      - name: Comment on PR with performance results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            try {
+              const reportPath = 'results/performance/performance-report.html';
+              if (fs.existsSync(reportPath)) {
+                const reportContent = fs.readFileSync(reportPath, 'utf8');
+                const passedTests = reportContent.match(/Passed: (\d+)/)?.[1] || '0';
+                const failedTests = reportContent.match(/Failed: (\d+)/)?.[1] || '0';
+                
+                const status = parseInt(failedTests) > 0 ? '❌' : '✅';
+                
+                github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: `## Performance Tests ${status}\n\n**Passed:** ${passedTests} | **Failed:** ${failedTests}\n\n[View Full Report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
+                });
+              }
+            } catch (error) {
+              console.log('Could not create comment:', error.message);
+            } 

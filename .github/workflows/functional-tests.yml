@@ -1,0 +1,66 @@
+name: Functional Tests
+on: 
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  functional-tests:
+    runs-on: ubuntu-latest
+    name: Run Functional Tests
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run functional tests
+        run: npm run test:functional
+        
+      - name: Generate functional test report
+        run: npm run report:functional
+        
+      - name: Upload functional test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: functional-test-results
+          path: |
+            results/functional/
+            cypress/videos/functional/
+            cypress/screenshots/functional/
+          retention-days: 30
+          
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            try {
+              const reportPath = 'results/functional/functional-report.html';
+              if (fs.existsSync(reportPath)) {
+                const reportContent = fs.readFileSync(reportPath, 'utf8');
+                const summary = reportContent.match(/<title>(.*?)<\/title>/)?.[1] || 'Functional Test Report';
+                
+                github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: `## Functional Tests ✅\n\n**Summary:** ${summary}\n\n[View Full Report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
+                });
+              }
+            } catch (error) {
+              console.log('Could not create comment:', error.message);
+            } 

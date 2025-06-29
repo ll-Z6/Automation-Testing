@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "types": ["cypress", "node"],  // 关键：包含 Cypress 类型
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "node"],  // Key: Include Cypress types
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
