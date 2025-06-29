@@ -51,13 +51,11 @@ cypress-automation-project/
 - **SauceDemo**: Login validation, product sorting/filtering, checkout flow
 - **PetStore**: API testing, store operations, data validation
 - **Data-driven**: Dynamic test data with fixtures and API responses
-- **Best Practices**: Page Object Model, custom commands, assertions
 
 ### Performance & Stress Testing
 - **Page Load Performance**: Response time measurements and thresholds
 - **API Performance**: Endpoint response times and throughput
 - **Stress Testing**: Rapid user actions, concurrency, memory pressure
-- **Threshold Monitoring**: Configurable performance baselines
 
 ### Test Organization
 - **Separation of Concerns**: Different configs, reports, and CI for functional vs. performance
@@ -81,13 +79,11 @@ npm ci
 ```bash
 npm run test:functional
 ```
-- Results: `results/functional/`, videos/screenshots in `cypress/videos/functional/` and `cypress/screenshots/functional/`
 
 #### Performance & Stress Tests
 ```bash
 npm run test:performance
 ```
-- Results: `results/performance/`, videos/screenshots in `cypress/videos/performance/` and `cypress/screenshots/performance/`
 
 #### All Tests
 ```bash
@@ -150,16 +146,6 @@ npm run report:performance
 - **Performance Failures**: Review thresholds in performance test files and adjust if needed
 - **CI/CD Issues**: Verify workflow YAML configurations and environment variables
 
-### Performance Test Adjustments
-- Modify thresholds in `cypress/e2e/performance/*` files
-- Adjust stress test parameters for different environments
-- Update baseline metrics as application performance improves
-
-### Report Generation
-- Ensure `results/` directory exists before running report commands
-- Check for sufficient disk space for video/screenshot storage
-- Verify Mochawesome dependencies are properly installed
-
 ---
 
-**Happy Testing! 🚀** 
+**Thanks For Your Review!!!** 
