@@ -37,6 +37,11 @@ jobs:
       - name: Run performance tests with JUnit reporter
         run: npm run test:ci:performance
         
+      - name: Create results directories
+        run: |
+          mkdir -p results/performance
+          mkdir -p results/junit
+        
       - name: Generate performance test report
         run: npm run report:performance
         

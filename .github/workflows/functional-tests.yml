@@ -30,7 +30,12 @@ jobs:
         run: npm ci
         
       - name: Run functional tests with JUnit reporter
-        run: npm run test:ci
+        run: cypress run --config-file cypress.config.functional.ts --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/test-results-[hash].xml,testsuitesTitle='Cypress Functional Tests',toConsole=true
+        
+      - name: Create results directories
+        run: |
+          mkdir -p results/functional
+          mkdir -p results/junit
         
       - name: Generate functional test report
         run: npm run report:functional
