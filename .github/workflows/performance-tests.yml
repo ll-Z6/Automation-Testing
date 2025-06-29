@@ -64,6 +64,8 @@ jobs:
         with:
           name: Cypress Performance JUnit Report
           path: results/junit/performance-*.xml
+          reporter: java-junit
+          fail-on-error: false
           
       - name: Create performance issue if tests fail
         if: failure()

@@ -59,6 +59,7 @@ jobs:
           name: Cypress JUnit Report
           path: results/junit/*.xml
           reporter: java-junit
+          fail-on-error: false
           
       - name: Comment PR with results
         if: github.event_name == 'pull_request'

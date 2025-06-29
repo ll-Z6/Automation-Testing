@@ -3,23 +3,7 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      // Configure reports for functional tests
-      config.reporter = 'cypress-multi-reporters'
-      config.reporterOptions = {
-        reporterEnabled: 'mochawesome, mocha-junit-reporter',
-        mochawesomeReporterOptions: {
-          reportDir: 'results/functional',
-          overwrite: false,
-          html: true,
-          json: true,
-          charts: true
-        },
-        mochaJunitReporterReporterOptions: {
-          mochaFile: 'results/functional/junit.xml',
-          outputs: true,
-          testCaseSwitchClassnameAndName: false
-        }
-      }
+      // implement node event listeners here
       return config
     },
     // Functional test specific configuration
@@ -40,23 +24,6 @@ export default defineConfig({
     retries: {
       runMode: 1,
       openMode: 0
-    },
-    // Functional test report configuration
-    reporter: 'cypress-multi-reporters',
-    reporterOptions: {
-      reporterEnabled: 'mochawesome, mocha-junit-reporter',
-      mochawesomeReporterOptions: {
-        reportDir: 'results/functional',
-        overwrite: false,
-        html: true,
-        json: true,
-        charts: true
-      },
-      mochaJunitReporterReporterOptions: {
-        mochaFile: 'results/functional/junit.xml',
-        outputs: true,
-        testCaseSwitchClassnameAndName: false
-      }
     },
     env: {
       testType: 'functional'

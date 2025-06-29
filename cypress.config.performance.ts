@@ -3,23 +3,7 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      // Configure reports for performance tests
-      config.reporter = 'cypress-multi-reporters'
-      config.reporterOptions = {
-        reporterEnabled: 'mochawesome, mocha-junit-reporter',
-        mochawesomeReporterOptions: {
-          reportDir: 'results/performance',
-          overwrite: false,
-          html: true,
-          json: true,
-          charts: true
-        },
-        mochaJunitReporterReporterOptions: {
-          mochaFile: 'results/performance/junit.xml',
-          outputs: true,
-          testCaseSwitchClassnameAndName: false
-        }
-      }
+      // implement node event listeners here
       return config
     },
     // Performance test specific configuration
@@ -46,23 +30,6 @@ export default defineConfig({
     },
     env: {
       testType: 'performance'
-    },
-    // Performance test report configuration
-    reporter: 'cypress-multi-reporters',
-    reporterOptions: {
-      reporterEnabled: 'mochawesome, mocha-junit-reporter',
-      mochawesomeReporterOptions: {
-        reportDir: 'results/performance',
-        overwrite: false,
-        html: true,
-        json: true,
-        charts: true
-      },
-      mochaJunitReporterReporterOptions: {
-        mochaFile: 'results/performance/junit.xml',
-        outputs: true,
-        testCaseSwitchClassnameAndName: false
-      }
     }
   },
   // Global configuration
