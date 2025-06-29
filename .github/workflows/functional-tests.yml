@@ -1,9 +1,9 @@
 name: Functional Tests
 on: 
   push:
-    branches: [ main, develop ]
+    branches: [ master ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ master ]
 
 jobs:
   functional-tests:
@@ -23,10 +23,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Run functional tests
-        run: npm run test:functional
-        
-      - name: Run Cypress tests with JUnit reporter
+      - name: Run functional tests with JUnit reporter
         run: npm run test:ci
         
       - name: Generate functional test report

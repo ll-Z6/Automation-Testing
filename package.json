@@ -12,6 +12,7 @@
     "test:saucedemo": "cypress run --spec \"cypress/e2e/saucedemo/**\"",
     "test:petstore": "cypress run --spec \"cypress/e2e/petstore/**\"",
     "test:ci": "cypress run --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/test-results-[hash].xml,testsuitesTitle='Cypress Tests',toConsole=true",
+    "test:ci:performance": "cypress run --config-file cypress.config.performance.ts --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/performance-test-results-[hash].xml,testsuitesTitle='Cypress Performance Tests',toConsole=true",
     "test:mochawesome": "cypress run --browser chrome --reporter mochawesome --reporter-options reportDir=results,overwrite=false,html=false,json=true",
     "report:merge": "npx mochawesome-merge results/*.json > results/merged-report.json",
     "report:generate": "npx marge results/merged-report.json -f report -o results",

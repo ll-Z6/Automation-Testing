@@ -1,15 +1,15 @@
-name: Performance Tests
+name: 性能测试流水线
 on: 
   schedule:
     - cron: '0 2 1 1 *'  # 每年1月1日凌晨2点运行
   push:
-    branches: [ main ]
+    branches: [ master ]
   workflow_dispatch:  # 允许手动触发
 
 jobs:
   performance-tests:
     runs-on: ubuntu-latest
-    name: Run Performance Tests
+    name: 运行性能测试
     
     steps:
       - name: Checkout code
@@ -27,6 +27,9 @@ jobs:
       - name: Run performance tests
         run: npm run test:performance
         
+      - name: Run performance tests with JUnit reporter
+        run: npm run test:ci:performance
+        
       - name: Generate performance test report
         run: npm run report:performance
         
@@ -37,9 +40,23 @@ jobs:
           name: performance-test-results
           path: |
             results/performance/
+            results/junit/
             cypress/videos/performance/
             cypress/screenshots/performance/
           retention-days: 30
+          
+      - name: Upload JUnit Performance Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-performance-test-results
+          path: results/junit/performance-*.xml
+          
+      - name: Publish Performance Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Cypress Performance JUnit Report
+          path: results/junit/performance-*.xml
           
       - name: Create performance issue if tests fail
         if: failure()
