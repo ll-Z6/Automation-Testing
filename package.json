@@ -4,20 +4,17 @@
   "description": "Cypress automation project with TypeScript",
   "main": "index.js",
   "scripts": {
-    "test": "cypress run",
+    "test": "cypress run --config-file cypress.config.e2e.ts --spec \"cypress/e2e/*.cy.ts\" && cypress run --config-file cypress.config.api.ts --spec \"cypress/api/**/*.cy.ts\"",
     "test:ui": "cypress open",
-    "test:functional": "cypress run --config-file cypress.config.functional.ts",
-    "test:performance": "cypress run --config-file cypress.config.performance.ts",
-    "test:all": "npm run test:functional && npm run test:performance",
-    "test:saucedemo": "cypress run --spec \"cypress/e2e/saucedemo/**\"",
-    "test:petstore": "cypress run --spec \"cypress/e2e/petstore/**\"",
-    "test:ci": "cypress run --config-file cypress.config.functional.ts --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/test-results-[hash].xml,testsuitesTitle='Cypress Functional Tests',toConsole=true",
-    "test:ci:performance": "cypress run --config-file cypress.config.performance.ts --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/performance-test-results-[hash].xml,testsuitesTitle='Cypress Performance Tests',toConsole=true",
+    "test:e2e": "cypress run --config-file cypress.config.e2e.ts --spec \"cypress/e2e/*.cy.ts\"",
+    "test:api": "cypress run --config-file cypress.config.api.ts --spec \"cypress/api/**/*.cy.ts\"",
+    "test:ci": "cypress run --config-file cypress.config.e2e.ts --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/test-results-[hash].xml,testsuitesTitle='Cypress E2E Tests',toConsole=true",
+    "test:ci:api": "cypress run --config-file cypress.config.api.ts --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/api-test-results-[hash].xml,testsuitesTitle='Cypress API Tests',toConsole=true",
     "test:mochawesome": "cypress run --browser chrome --reporter mochawesome --reporter-options reportDir=results,overwrite=false,html=false,json=true",
     "report:merge": "npx mochawesome-merge results/*.json > results/merged-report.json",
     "report:generate": "npx marge results/merged-report.json -f report -o results",
     "report:functional": "npx mochawesome-merge results/functional/*.json > results/functional/merged-report.json && npx marge results/functional/merged-report.json -f functional-report -o results/functional",
-    "report:performance": "npx mochawesome-merge results/performance/*.json > results/performance/merged-report.json && npx marge results/performance/merged-report.json -f performance-report -o results/performance"
+    "report:api": "npx mochawesome-merge results/api/*.json > results/api/merged-report.json && npx marge results/api/merged-report.json -f api-report -o results/api"
   },
   "keywords": [
     "cypress",

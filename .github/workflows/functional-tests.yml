@@ -1,9 +1,8 @@
 name: Functional Tests
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   functional-tests:
@@ -32,64 +31,69 @@ jobs:
       - name: Create results directories
         run: |
           mkdir -p results/functional
+          mkdir -p results/api
           mkdir -p results/junit
         
-      - name: Run functional tests with Mochawesome reporter
-        run: npx cypress run --config-file cypress.config.functional.ts --browser chrome --reporter mochawesome --reporter-options reportDir=results/functional,overwrite=false,html=false,json=true
+      - name: Run E2E tests with Mochawesome reporter
+        run: npx cypress run --config-file cypress.config.e2e.ts --spec "cypress/e2e/*.cy.ts" --browser chrome --reporter mochawesome --reporter-options reportDir=results/functional,overwrite=false,html=false,json=true
         
-      - name: Run functional tests with JUnit reporter
-        run: npx cypress run --config-file cypress.config.functional.ts --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/test-results-[hash].xml,testsuitesTitle='Cypress Functional Tests',toConsole=true
+      - name: Run E2E tests with JUnit reporter
+        run: npx cypress run --config-file cypress.config.e2e.ts --spec "cypress/e2e/*.cy.ts" --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/e2e-test-results-[hash].xml,testsuitesTitle='Cypress E2E Tests',toConsole=true
         
-      - name: Generate functional test report
+      - name: Run API tests with Mochawesome reporter
+        run: npx cypress run --config-file cypress.config.api.ts --spec "cypress/api/**/*.cy.ts" --browser chrome --reporter mochawesome --reporter-options reportDir=results/api,overwrite=false,html=false,json=true
+        
+      - name: Run API tests with JUnit reporter
+        run: npx cypress run --config-file cypress.config.api.ts --spec "cypress/api/**/*.cy.ts" --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/junit/api-test-results-[hash].xml,testsuitesTitle='Cypress API Tests',toConsole=true
+        
+      - name: Generate E2E test report
         run: npm run report:functional
         
-      - name: Upload functional test results
+      - name: Generate API test report
+        run: npm run report:api
+        
+      - name: Upload E2E test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: functional-test-results
+          name: e2e-test-results
           path: |
             results/functional/
             cypress/videos/functional/
             cypress/screenshots/functional/
           retention-days: 30
           
-      - name: Upload JUnit Test Report
+      - name: Upload API test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-test-results
+          path: |
+            results/api/
+            cypress/videos/api/
+            cypress/screenshots/api/
+          retention-days: 30
+          
+      - name: Upload JUnit Test Reports
         uses: actions/upload-artifact@v4
         with:
           name: junit-test-results
           path: results/junit/
           
-      - name: Publish Test Report
+      - name: Publish E2E Test Report
         uses: dorny/test-reporter@v1
         if: always()
         with:
-          name: Cypress JUnit Report
-          path: results/junit/*.xml
+          name: Cypress E2E JUnit Report
+          path: results/junit/e2e-test-results-*.xml
           reporter: java-junit
           fail-on-error: false
           
-      - name: Comment PR with results
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+      - name: Publish API Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
         with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-            
-            try {
-              const reportPath = 'results/functional/functional-report.html';
-              if (fs.existsSync(reportPath)) {
-                const reportContent = fs.readFileSync(reportPath, 'utf8');
-                const summary = reportContent.match(/<title>(.*?)<\/title>/)?.[1] || 'Functional Test Report';
-                
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: `## Functional Tests ✅\n\n**Summary:** ${summary}\n\n[View Full Report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
-                });
-              }
-            } catch (error) {
-              console.log('Could not create comment:', error.message);
-            } 
+          name: Cypress API JUnit Report
+          path: results/junit/api-test-results-*.xml
+          reporter: java-junit
+          fail-on-error: false

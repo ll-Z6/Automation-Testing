@@ -2,12 +2,11 @@
 
 ## Project Overview
 
-This project is an automated testing framework for web applications, using [Cypress](https://www.cypress.io/). It covers both functional and performance (including stress) testing for two demo systems: **SauceDemo** and **PetStore**. The framework supports:
+This project is an automated testing framework for web applications, using [Cypress](https://www.cypress.io/). It covers functional E2E testing for **SauceDemo** and API testing for **PetStore**. The framework supports:
 
 - Functional E2E tests for critical user flows
-- Performance and stress tests for key scenarios
+- API testing for backend services
 - Data-driven testing and best practices
-- Separate configuration and reporting for functional and performance tests
 - Automated CI/CD pipelines with GitHub Actions
 
 ## Directory Structure
@@ -15,52 +14,43 @@ This project is an automated testing framework for web applications, using [Cypr
 ```
 cypress-automation-project/
 ├── cypress/
-│   ├── e2e/
-│   │   ├── functional/         # Functional test cases
-│   │   │   ├── saucedemo/
-│   │   │   │   ├── login.cy.ts
-│   │   │   │   ├── products.cy.ts
-│   │   │   │   └── checkout.cy.ts
-│   │   │   └── petstore/
-│   │   │       └── store.cy.ts
-│   │   └── performance/        # Performance & stress test cases
-│   │       ├── saucedemo/
-│   │       │   ├── login-performance.cy.ts
-│   │       │   └── checkout-performance.cy.ts
-│   │       └── petstore/
-│   │           └── api-performance.cy.ts
+│   ├── e2e/                    # E2E functional test cases
+│   │   ├── login.cy.ts
+│   │   ├── products.cy.ts
+│   │   └── checkout.cy.ts
+│   ├── api/                    # API test cases
+│   │   └── store.cy.ts
 │   ├── fixtures/               # Test data
 │   ├── support/                # Custom commands & page objects
 │   ├── screenshots/
 │   ├── downloads/
 │   └── videos/
 ├── results/                    # Test reports
-├── cypress.config.ts           # Base Cypress config
-├── cypress.config.functional.ts# Functional test config
-├── cypress.config.performance.ts# Performance test config
+├── cypress.config.e2e.ts       # E2E test config
+├── cypress.config.api.ts       # API test config
 ├── package.json
 ├── tsconfig.json
 └── .github/workflows/          # CI/CD workflows
-    ├── functional-tests.yml
-    └── performance-tests.yml
+    └── functional-tests.yml
 ```
 
 ## Core Features
 
 ### Functional Testing
 - **SauceDemo**: Login validation, product sorting/filtering, checkout flow
-- **PetStore**: API testing, store operations, data validation
 - **Data-driven**: Dynamic test data with fixtures and API responses
 
-### Performance & Stress Testing
-- **Page Load Performance**: Response time measurements and thresholds
-- **API Performance**: Endpoint response times and throughput
-- **Stress Testing**: Rapid user actions, concurrency, memory pressure
+### API Testing
+- **PetStore**: API testing, store operations, data validation
+- **RESTful APIs**: Comprehensive endpoint testing and validation
 
 ### Test Organization
-- **Separation of Concerns**: Different configs, reports, and CI for functional vs. performance
-- **Modular Structure**: Organized by application and test type
+- **Modular Structure**: Organized by application and test type (E2E and API)
 - **Reusable Components**: Shared fixtures, commands, and page objects
+
+## Security Notes
+
+> **Important**: In production environments, user credentials should be set as environment variables rather than hardcoded in test files or fixtures. The current setup uses demo credentials for testing purposes only.
 
 ## Setup Instructions
 
@@ -75,19 +65,14 @@ npm ci
 
 ### 3. Run Tests Locally
 
-#### Functional Tests
+#### E2E Tests
 ```bash
-npm run test:functional
+npm run test:e2e
 ```
 
-#### Performance & Stress Tests
+#### API Tests
 ```bash
-npm run test:performance
-```
-
-#### All Tests
-```bash
-npm run test:all
+npm run test:api
 ```
 
 #### Open Cypress Interactive Runner
@@ -100,8 +85,8 @@ npm run test:ui
 # Generate functional test reports
 npm run report:functional
 
-# Generate performance test reports
-npm run report:performance
+# Generate API test reports
+npm run report:api
 ```
 
 ## CI Pipeline Usage
@@ -110,40 +95,34 @@ npm run report:performance
 
 #### Functional Tests (`functional-tests.yml`)
 - **Trigger**: Push or pull request to `main` or `develop` branches
-- **Purpose**: Validate application functionality and user flows
+- **Purpose**: Validate application functionality and user flows, API endpoints
 - **Reports**: Mochawesome HTML reports and JUnit XML for CI integration
 
-#### Performance Tests (`performance-tests.yml`)
-- **Trigger**: Push to `main`, manual trigger, or yearly schedule (January 1st, 2:00 AM UTC)
-- **Purpose**: Monitor performance metrics and stress test scenarios
-- **Reports**: Performance-specific reports with threshold analysis
+
 
 ### How to Run CI Manually
 1. Go to the **Actions** tab in your GitHub repository
-2. Select the workflow (`Functional Tests` or `Performance Tests`)
+2. Select the workflow (`Functional Tests`)
 3. Click **Run workflow** to trigger manually
 
 ### Viewing Test Results
-- **CI Artifacts**: Download `functional-test-results` or `performance-test-results` from workflow runs
-- **Local Reports**: Check `results/functional/` and `results/performance/` directories
+- **CI Artifacts**: Download `e2e-test-results` and `api-test-results` from workflow runs
+- **Local Reports**: Check `results/functional/` and `results/api/` directories
 - **PR Integration**: Automatic summary and report links posted on pull requests
-- **Failure Handling**: GitHub issues automatically created for failed performance tests
+- **Failure Handling**: GitHub issues automatically created for failed tests
 
 ## Test Coverage
 
 ### SauceDemo Application
-- **Functional**: Login validation, product management, checkout process
-- **Performance**: Login flow performance, checkout stress testing
+- **E2E**: Login validation, product management, checkout process
 
 ### PetStore Application
-- **Functional**: API testing, store operations, data validation
-- **Performance**: API endpoint performance, concurrent request handling
+- **API**: Store operations, data validation, endpoint testing
 
 ## Troubleshooting
 
 ### Common Issues
 - **Network Timeouts**: Check internet connection and target application availability
-- **Performance Failures**: Review thresholds in performance test files and adjust if needed
 - **CI/CD Issues**: Verify workflow YAML configurations and environment variables
 
 ---

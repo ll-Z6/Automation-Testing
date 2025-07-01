@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["es5", "dom"],
-    "types": ["cypress", "node"],  // Key: Include Cypress types
+    "types": ["cypress", "node"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -13,8 +13,21 @@
     "paths": {
       "@/*": ["cypress/*"]
     },
-    "typeRoots": ["./node_modules/@types", "./cypress/support"]
+    "typeRoots": ["./node_modules/@types", "./cypress/support"],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node"
   },
-  "include": ["**/*.ts", "**/*.tsx", "cypress/support/*.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "cypress/e2e/**/*.ts",
+    "cypress/e2e/**/*.tsx",
+    "cypress/api/**/*.ts",
+    "cypress/api/**/*.tsx",
+    "cypress/support/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "results"
+  ]
 }
