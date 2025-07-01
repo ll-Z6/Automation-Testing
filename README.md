@@ -4,7 +4,7 @@
 
 This project is an automated testing framework for web applications, using [Cypress](https://www.cypress.io/). It covers functional E2E testing for **SauceDemo** and API testing for **PetStore**. The framework supports:
 
-- Functional E2E tests for critical user flows
+- E2E tests for critical user flows
 - API testing for backend services
 - Data-driven testing and best practices
 - Automated CI/CD pipelines with GitHub Actions
@@ -14,7 +14,7 @@ This project is an automated testing framework for web applications, using [Cypr
 ```
 cypress-automation-project/
 ├── cypress/
-│   ├── e2e/                    # E2E functional test cases
+│   ├── e2e/                    # E2E test cases
 │   │   ├── login.cy.ts
 │   │   ├── products.cy.ts
 │   │   └── checkout.cy.ts
@@ -37,7 +37,7 @@ cypress-automation-project/
 ## Core Features
 
 ### Functional Testing
-- **SauceDemo**: Login validation, product sorting/filtering, checkout flow
+- **SauceDemo**: Login validation, product sorting, shopping card operations, checkout flow
 - **Data-driven**: Dynamic test data with fixtures and API responses
 
 ### API Testing
@@ -94,7 +94,7 @@ npm run report:api
 ### GitHub Actions Workflows
 
 #### Functional Tests (`functional-tests.yml`)
-- **Trigger**: Push or pull request to `main` or `develop` branches
+- **Trigger**: Push or pull request to `main` branches
 - **Purpose**: Validate application functionality and user flows, API endpoints
 - **Reports**: Mochawesome HTML reports and JUnit XML for CI integration
 
