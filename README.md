@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is an automated testing framework for web applications, using [Cypress](https://www.cypress.io/). It covers functional E2E testing for **SauceDemo** and API testing for **PetStore**. The framework supports:
+This project is an automated testing framework for web applications, using [Cypress](https://www.cypress.io/) and [TypreScript](https://www.typescriptlang.org/). It covers E2E testing for **SauceDemo** and API testing for **PetStore**. The framework supports:
 
 - E2E tests for critical user flows
 - API testing for backend services
@@ -36,7 +36,7 @@ cypress-automation-project/
 
 ## Core Features
 
-### Functional Testing
+### E2E Testing
 - **SauceDemo**: Login validation, product sorting, shopping card operations, checkout flow
 - **Data-driven**: Dynamic test data with fixtures and API responses
 
